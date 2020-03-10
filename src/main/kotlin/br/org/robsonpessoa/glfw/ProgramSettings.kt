@@ -66,8 +66,7 @@ data class Program(val id: Int, val shaders: MutableList<Shader>, val data: Muta
             val pointer = ByteBuffer.allocateDirect(value.count() * FLOAT_SIZE_BYTES).order(ByteOrder.nativeOrder()).position(0).asFloatBuffer()
             pointer.put(value).rewind()
 
-            // FIXME Será o strides que está errado?
-            glVertexAttribPointer(getLocation(key), 2, GL11.GL_FLOAT, false, VERTICES_DATA_STRIDE_BYTES, pointer)
+            glVertexAttribPointer(getLocation(key), 2, GL11.GL_FLOAT, false, 0, 0)
         }
     }
 

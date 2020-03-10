@@ -6,7 +6,7 @@ import org.lwjgl.opengl.GL11
 fun main() {
     val app = Engine()
 
-    app.setWindowConfiguration("Hello World", 600, 720)
+    app.setWindowConfiguration("Hello World", 600, 600)
     app.setOnEngineListener(EngineListenerImpl())
 
     app.run()
@@ -16,6 +16,7 @@ class EngineListenerImpl: Engine.EngineListener {
 
     companion object {
         private const val POSITION = "position"
+        private const val DIMENSION = 2
     }
 
     override fun onLoadProgramSettings(settings: ProgramSettings) {
@@ -24,16 +25,16 @@ class EngineListenerImpl: Engine.EngineListener {
     }
 
     override fun onDraw(program: Program) {
-        GL11.glDrawArrays(GL11.GL_POINTS, 0, program.data[POSITION]!!.count())
+        GL11.glDrawArrays(GL11.GL_LINE_LOOP, 0, program.data[POSITION]!!.count() / DIMENSION)
     }
 
     private fun configureVertices(settings: ProgramSettings) {
         settings.setData(POSITION) {
             val vertices = floatArrayOf(
                 -0.5f, 0.5f,
-                -0.5f, -0.5f, // FIXME Por algum motivo isso não é plotado
-                +0.5f, +0.5f,
-                -0.5f, -0.5f
+                -0.5f, -0.5f,
+                +0.5f, -0.5f,
+                +0.5f, +0.5f
             )
 
             vertices

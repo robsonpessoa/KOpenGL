@@ -8,14 +8,16 @@ interface ShaderBuilder {
     fun code(code: String): FinalShaderBuilder
 }
 
-interface FinalShaderBuilder: ShaderBuilder {
+interface FinalShaderBuilder : ShaderBuilder {
     fun build(): Shader {
         return Shader(definition!!, code!!)
     }
 }
 
 data class Shader(private val definition: Int, val code: String) {
-    var id: Int? = null
+    private var mId: Int? = null
+    val id: Int
+        get() = mId!!
 
     private fun compile(shader: Int) {
         glCompileShader(shader)
@@ -24,7 +26,7 @@ data class Shader(private val definition: Int, val code: String) {
         glGetShaderiv(shader, GL_COMPILE_STATUS, buffer)
         if (buffer[0] == 0) {
             val error = glGetShaderInfoLog(shader)
-            throw RuntimeException("Erro ao compilar o shader: $error")
+            throw RuntimeException("Error while compiling the shader: $error")
         }
     }
 
@@ -32,12 +34,12 @@ data class Shader(private val definition: Int, val code: String) {
         val shader = glCreateShader(this.definition)
         glShaderSource(shader, this.code)
         compile(shader)
-        id = shader
-        glAttachShader(program.id, id!!)
+        mId = shader
+        glAttachShader(program.id, id)
     }
 }
 
-class VertexShaderBuilder: ShaderBuilder, FinalShaderBuilder {
+class VertexShaderBuilder : ShaderBuilder, FinalShaderBuilder {
     override var code: String? = null
     override var definition: Int? = null
 
@@ -51,7 +53,7 @@ class VertexShaderBuilder: ShaderBuilder, FinalShaderBuilder {
     }
 }
 
-class FragmentShaderBuilder: ShaderBuilder, FinalShaderBuilder {
+class FragmentShaderBuilder : ShaderBuilder, FinalShaderBuilder {
     override var code: String? = null
     override var definition: Int? = null
 

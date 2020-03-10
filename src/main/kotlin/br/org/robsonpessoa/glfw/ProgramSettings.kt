@@ -5,28 +5,29 @@ import org.lwjgl.opengl.GL15
 import org.lwjgl.opengl.GL20.*
 import java.nio.ByteBuffer
 import java.nio.ByteOrder
-import java.nio.FloatBuffer
 
-class ProgramBuilder {
+class ProgramSettings {
     private val shaders: MutableList<Shader> = mutableListOf()
     private val data = mutableMapOf<String, FloatArray>()
 
-    fun addShader(shader: Shader): ProgramBuilder {
+    fun addShader(shader: Shader): ProgramSettings {
         if (!shaders.contains(shader)) {
             shaders.add(shader)
         }
         return this
     }
 
-    fun setData(name: String, data: FloatArray) {
+    fun setData(name: String, data: FloatArray): ProgramSettings {
         this.data[name] = data
+        return this
     }
 
-    fun setData(name: String, f: () -> FloatArray) {
+    fun setData(name: String, f: () -> FloatArray): ProgramSettings {
         setData(name, f())
+        return this
     }
 
-    fun build(): Program {
+    fun apply(): Program {
         val program = glCreateProgram()
         return Program(program, shaders, data)
     }
@@ -40,9 +41,7 @@ data class Program(val id: Int, val shaders: MutableList<Shader>, val data: Muta
 
     init {
         configureShaders()
-
         configureBuffer()
-
         glUseProgram(id)
     }
 
@@ -79,7 +78,7 @@ data class Program(val id: Int, val shaders: MutableList<Shader>, val data: Muta
         glGetProgramiv(id, GL_LINK_STATUS, buffer)
         if (buffer[0] != GL11.GL_TRUE) {
             val error = glGetProgramInfoLog(id)
-            throw RuntimeException("Erro ao compilar o shader: $error")
+            throw RuntimeException("Error while linking the GLSL file: $error")
         }
     }
 

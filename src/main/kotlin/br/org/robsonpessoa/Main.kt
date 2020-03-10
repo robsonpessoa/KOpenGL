@@ -4,28 +4,31 @@ import br.org.robsonpessoa.glfw.*
 import org.lwjgl.opengl.GL11
 
 fun main() {
-    val app = Application("Hello World")
-    app.setOnApplicationListener(ApplicationListenerImpl())
+    val app = Engine()
+
+    app.setWindowConfiguration("Hello World", 600, 720)
+    app.setOnEngineListener(EngineListenerImpl())
+
     app.run()
 }
 
-class ApplicationListenerImpl: Application.ApplicationListener {
+class EngineListenerImpl: Engine.EngineListener {
 
     companion object {
         private const val POSITION = "position"
     }
 
-    override fun onConfiguringProgram(builder: ProgramBuilder) {
-        configureShaders(builder)
-        configureVertices(builder)
+    override fun onLoadProgramSettings(settings: ProgramSettings) {
+        configureShaders(settings)
+        configureVertices(settings)
     }
 
     override fun onDraw(program: Program) {
         GL11.glDrawArrays(GL11.GL_POINTS, 0, program.data[POSITION]!!.count())
     }
 
-    private fun configureVertices(builder: ProgramBuilder) {
-        builder.setData(POSITION) {
+    private fun configureVertices(settings: ProgramSettings) {
+        settings.setData(POSITION) {
             val vertices = floatArrayOf(
                 -0.5f, 0.5f,
                 -0.5f, -0.5f, // FIXME Por algum motivo isso não é plotado
@@ -37,8 +40,8 @@ class ApplicationListenerImpl: Application.ApplicationListener {
         }
     }
 
-    private fun configureShaders(builder: ProgramBuilder) {
-        builder.addShader(
+    private fun configureShaders(settings: ProgramSettings) {
+        settings.addShader(
             VertexShaderBuilder()
                 .code(
                     """
@@ -51,7 +54,7 @@ class ApplicationListenerImpl: Application.ApplicationListener {
                 .build()
         )
 
-        builder.addShader(
+        settings.addShader(
             FragmentShaderBuilder()
                 .code(
                     """

@@ -10,4 +10,6 @@ To create the jar, use:
 ```
 
 ### Run
+```sh
 java -jar build/libs/KOpenGL-1.0-SNAPSHOT.jar
+```

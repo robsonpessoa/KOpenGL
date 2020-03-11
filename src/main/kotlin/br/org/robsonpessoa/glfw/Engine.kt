@@ -18,7 +18,7 @@ class Engine {
 
     private fun init() {
         if (window == null) {
-            throw java.lang.IllegalStateException("The Engine must have its window configured before starts.")
+            throw java.lang.IllegalStateException("The Engine must have its window configured before it starts.")
         }
 
         window!!.init()
@@ -48,10 +48,7 @@ class Engine {
         while (window!!.isOpen()) {
             // Clear the framebuffer
             glClear(GL_COLOR_BUFFER_BIT or GL_DEPTH_BUFFER_BIT)
-            glClearColor(0f, 0f, 0f, 1.0f)
-
             engineListener?.onDraw(program!!)
-
             window!!.sync()
         }
     }

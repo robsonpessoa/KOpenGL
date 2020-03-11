@@ -33,10 +33,11 @@ class ProgramSettings {
 
 }
 
-data class Program(val id: Int, val shaders: List<Shader>, val data: Map<String, FloatBuffer>) {
+data class Program(val id: Int, val shaders: List<Shader>, private val data: Map<String, FloatBuffer>) {
     private val location = mutableMapOf<String, Int>()
 
     fun getLocation(name: String): Int = location[name]!!
+    operator fun get(name: String): FloatBuffer? = data[name]
 
     init {
         configureShaders()

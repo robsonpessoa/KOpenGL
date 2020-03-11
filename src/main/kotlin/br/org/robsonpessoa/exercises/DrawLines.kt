@@ -17,7 +17,9 @@ class DrawLines : Engine.EngineListener {
     }
 
     override fun onDraw(program: Program) {
-        program.data[POSITION]?.let {
+        GL11.glClearColor(0f, 0f, 0f, 1.0f)
+
+        program[POSITION]?.let {
             GL11.glDrawArrays(
                 GL11.GL_LINE_LOOP,
                 0,

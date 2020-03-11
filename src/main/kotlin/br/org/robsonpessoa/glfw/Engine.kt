@@ -72,6 +72,8 @@ class Engine {
 
     fun getWindow(): Window? = window
 
+    fun getProgram(): Program? = program
+
     fun setOnEngineListener(listener: EngineListener) {
         this.engineListener = listener
     }

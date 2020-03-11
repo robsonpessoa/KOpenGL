@@ -3,12 +3,11 @@ package br.org.robsonpessoa.glfw
 import org.lwjgl.opengl.GL11
 import org.lwjgl.opengl.GL15
 import org.lwjgl.opengl.GL20.*
-import java.nio.ByteBuffer
-import java.nio.ByteOrder
+import java.nio.FloatBuffer
 
 class ProgramSettings {
     private val shaders: MutableList<Shader> = mutableListOf()
-    private val data = mutableMapOf<String, FloatArray>()
+    private val data = mutableMapOf<String, FloatBuffer>()
 
     fun addShader(shader: Shader): ProgramSettings {
         if (!shaders.contains(shader)) {
@@ -17,12 +16,12 @@ class ProgramSettings {
         return this
     }
 
-    fun setData(name: String, data: FloatArray): ProgramSettings {
+    fun setData(name: String, data: FloatBuffer): ProgramSettings {
         this.data[name] = data
         return this
     }
 
-    fun setData(name: String, f: () -> FloatArray): ProgramSettings {
+    fun setData(name: String, f: () -> FloatBuffer): ProgramSettings {
         setData(name, f())
         return this
     }
@@ -34,7 +33,7 @@ class ProgramSettings {
 
 }
 
-data class Program(val id: Int, val shaders: MutableList<Shader>, val data: MutableMap<String, FloatArray>) {
+data class Program(val id: Int, val shaders: List<Shader>, val data: Map<String, FloatBuffer>) {
     private val location = mutableMapOf<String, Int>()
 
     fun getLocation(name: String): Int = location[name]!!
@@ -63,10 +62,8 @@ data class Program(val id: Int, val shaders: MutableList<Shader>, val data: Muta
             location[key] = glGetAttribLocation(this.id, key)
             glEnableVertexAttribArray(getLocation(key))
 
-            val pointer = ByteBuffer.allocateDirect(value.count() * FLOAT_SIZE_BYTES).order(ByteOrder.nativeOrder()).position(0).asFloatBuffer()
-            pointer.put(value).rewind()
-
-            glVertexAttribPointer(getLocation(key), 2, GL11.GL_FLOAT, false, 0, 0)
+            // FIXME When using the pointer variable, it doesn't work
+            glVertexAttribPointer(getLocation(key), 2, GL11.GL_FLOAT, false, VERTICES_DATA_STRIDE_BYTES, 0)
         }
     }
 

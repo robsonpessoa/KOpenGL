@@ -11,8 +11,8 @@ fun FloatArray.toBuffer(): FloatBuffer {
 }
 
 fun FloatBuffer.asMatrix(columns: Int): Matrix {
-    val matrix = Matrix(array().count() / columns, columns)
-    (0 until array().count()).forEach {
+    val matrix = Matrix(capacity() / columns, columns)
+    (0 until capacity()).forEach {
         matrix.data[it / columns][it % columns] = get(it)
     }
     return matrix

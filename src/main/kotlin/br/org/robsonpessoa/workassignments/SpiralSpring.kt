@@ -1,4 +1,4 @@
-package br.org.robsonpessoa.exercises
+package br.org.robsonpessoa.workassignments
 
 import br.org.robsonpessoa.Spring
 import br.org.robsonpessoa.glfw.*
@@ -7,7 +7,7 @@ import org.lwjgl.opengl.GL11
 import org.lwjgl.opengl.GL20.glGetUniformLocation
 import org.lwjgl.opengl.GL20.glUniformMatrix4fv
 
-class TSpiralSpring : Engine.EngineListener, OnKeyListener {
+class SpiralSpring : Engine.EngineListener, OnKeyListener {
 
     companion object {
         private const val POSITION = "position"
@@ -25,7 +25,10 @@ class TSpiralSpring : Engine.EngineListener, OnKeyListener {
     override fun onDraw(window: Window, program: Program) {
         GL11.glClearColor(0f, 0f, 0f, 1.0f)
 
-        val loc = glGetUniformLocation(program.id, TRANSFORMATION)
+        val loc = glGetUniformLocation(
+            program.id,
+            TRANSFORMATION
+        )
         val transformation = spring.getTransformation()
 
         glUniformMatrix4fv(
@@ -53,10 +56,10 @@ class TSpiralSpring : Engine.EngineListener, OnKeyListener {
             VertexShaderBuilder()
                 .code(
                     """
-                            attribute vec2 ${POSITION};
+                            attribute vec2 $POSITION;
                             uniform mat4 mat_transformation;
                             void main(){
-                                gl_Position = mat_transformation * vec4(${POSITION},0.0,1.0);
+                                gl_Position = mat_transformation * vec4($POSITION,0.0,1.0);
                             }
                             """.trimIndent()
                 )

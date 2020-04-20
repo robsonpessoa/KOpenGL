@@ -5,23 +5,27 @@ import org.lwjgl.opengl.GL15
 import org.lwjgl.opengl.GL20.*
 import java.nio.FloatBuffer
 
-class ProgramSettings {
+/**
+ * A class that represents the settings of the program related of shaders and data matrix'es to be applied.
+ *
+ */
+class ProgramBuilder {
     private val shaders: MutableList<Shader> = mutableListOf()
     private val data = mutableMapOf<String, FloatBuffer>()
 
-    fun addShader(shader: Shader): ProgramSettings {
+    fun addShader(shader: Shader): ProgramBuilder {
         if (!shaders.contains(shader)) {
             shaders.add(shader)
         }
         return this
     }
 
-    fun setData(name: String, data: FloatBuffer): ProgramSettings {
+    fun setData(name: String, data: FloatBuffer): ProgramBuilder {
         this.data[name] = data
         return this
     }
 
-    fun setData(name: String, f: () -> FloatBuffer): ProgramSettings {
+    fun setData(name: String, f: () -> FloatBuffer): ProgramBuilder {
         setData(name, f())
         return this
     }
@@ -33,6 +37,13 @@ class ProgramSettings {
 
 }
 
+/**
+ * Represents the program and it's configuration.
+ *
+ * @property id the id of the OpenGL program object.
+ * @property shaders a list of the configured [Shader]'s.
+ * @property data a map <name, data> of the configured data [br.org.robsonpessoa.math.Matrix]'es.
+ */
 data class Program(val id: Int, val shaders: List<Shader>, private val data: Map<String, FloatBuffer>) {
     private val location = mutableMapOf<String, Int>()
 

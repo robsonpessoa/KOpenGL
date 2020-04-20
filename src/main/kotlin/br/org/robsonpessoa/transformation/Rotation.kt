@@ -5,12 +5,27 @@ import br.org.robsonpessoa.math.Matrix
 import kotlin.math.cos
 import kotlin.math.sin
 
+/**
+ * Represents the Rotation [Transformation].
+ *
+ * @constructor
+ * Builds the transformation according to the angle.
+ *
+ * @param angle the angle in radians.
+ */
 class Rotation(angle: Double) : Transformation() {
 
     init {
         this.matrix = getMatrixTransformation(angle)
     }
 
+    /**
+     * Builds the transformation based on a pivot param (x, y).
+     *
+     * @param x the coordinate x param.
+     * @param y the coordinate y param.
+     * @param angle the angle in radians.
+     */
     constructor(x: Float, y: Float, angle: Double) : this(angle) {
         this.matrix = (Translation(x, y) + buildTransformation(angle) + Translation(-x, -y))
             .getTransformationMatrix()

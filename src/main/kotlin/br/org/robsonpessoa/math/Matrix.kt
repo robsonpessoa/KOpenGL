@@ -3,10 +3,31 @@ package br.org.robsonpessoa.math
 import br.org.robsonpessoa.utils.toBuffer
 import java.nio.FloatBuffer
 
+/**
+ * A class that represents a Matrix of Floats filled with zero.
+ *
+ * @property rows the number of rows.
+ * @property columns the number of columns.
+ */
 open class Matrix(private val rows: Int, private val columns: Int) {
     protected val data = Array(rows) { FloatArray(columns) }
 
+    /**
+     * Gets the value of the param (x, y).
+     *
+     * @param x the x coordinate.
+     * @param y the y coordinate.
+     * @return the value.
+     */
     operator fun get(x: Int, y: Int): Float = data[x][y]
+
+    /**
+     * Sets the value (x,y) of the Matrix.
+     *
+     * @param x the x coordinate.
+     * @param y the y coordinate.
+     * @param value the value to be set.
+     */
     operator fun set(x: Int, y: Int, value: Float) {
         data[x][y] = value
     }
@@ -19,6 +40,12 @@ open class Matrix(private val rows: Int, private val columns: Int) {
         }
     }
 
+    /**
+     * The product of two [Matrix]'es.
+     *
+     * @param other the other [Matrix].
+     * @return the product [Matrix].
+     */
     operator fun times(other: Matrix): Matrix {
         val product = Matrix(rows, other.columns)
 
@@ -33,6 +60,11 @@ open class Matrix(private val rows: Int, private val columns: Int) {
         return product
     }
 
+    /**
+     * Creates an array of Float based on the Matrix values.
+     *
+     * @return the array.
+     */
     private fun toArray(): FloatArray {
         return FloatArray(rows * columns).apply {
             var index = 0
@@ -44,10 +76,20 @@ open class Matrix(private val rows: Int, private val columns: Int) {
         }
     }
 
+    /**
+     * Creates a buffer of Float based on the Matrix values.
+     *
+     * @return the buffer.
+     */
     fun toBuffer(): FloatBuffer {
         return toArray().toBuffer()
     }
 
+    /**
+     * Get's a [String] representing the Matrix values.
+     *
+     * @return the [String] object.
+     */
     override fun toString(): String {
         var str = ""
         (0 until rows).forEach { row ->
@@ -67,6 +109,11 @@ open class Matrix(private val rows: Int, private val columns: Int) {
     }
 }
 
+/**
+ * A Matrix with the main diagonal filled with 1.
+ *
+ * @property dimension the dimension of the Matrix.
+ */
 data class IdentityMatrix(val dimension: Int) : Matrix(dimension, dimension) {
     init {
         for (i in 0 until dimension) {

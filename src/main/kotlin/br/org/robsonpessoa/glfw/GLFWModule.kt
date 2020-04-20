@@ -3,6 +3,9 @@ package br.org.robsonpessoa.glfw
 import org.lwjgl.glfw.GLFW
 import org.lwjgl.glfw.GLFWErrorCallback
 
+/**
+ * An Singleton that represents the GLFW Module.
+ */
 object GLFWModule {
     private var mStatus = Status.OFF
 
@@ -11,6 +14,11 @@ object GLFWModule {
     val isRunning
         get() = mStatus == Status.ON
 
+    /**
+     * Uses the GLFW Module respecting the switch(on/off) of the module.
+     *
+     * @param function the function that uses the GLFW module.
+     */
     fun use(function: () -> Unit) {
         try {
             start()
@@ -20,7 +28,11 @@ object GLFWModule {
         }
     }
 
-    fun start() {
+    /**
+     * Configures the GLFW Module and start.
+     *
+     */
+    private fun start() {
         if (mStatus == Status.OFF) {
             // Setup an error callback. The default implementation
             // will print the error message in System.err.
@@ -35,7 +47,11 @@ object GLFWModule {
         }
     }
 
-    fun stop() {
+    /**
+     * Stops the GLFW Module.
+     *
+     */
+    private fun stop() {
         if (mStatus == Status.ON) {
             // Terminate GLFW
             GLFW.glfwTerminate()
@@ -44,6 +60,10 @@ object GLFWModule {
         }
     }
 
+    /**
+     * Enum class that represents the GLFW Module Status.
+     *
+     */
     private enum class Status {
         ON,
         OFF

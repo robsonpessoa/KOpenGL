@@ -11,9 +11,9 @@ class DrawLines : Engine.EngineListener {
         private const val DIMENSION = 2
     }
 
-    override fun onLoadProgramSettings(settings: ProgramSettings) {
-        configureShaders(settings)
-        configureVertices(settings)
+    override fun onBuildProgram(builder: ProgramBuilder) {
+        configureShaders(builder)
+        configureVertices(builder)
     }
 
     override fun onDraw(window: Window, program: Program) {
@@ -28,8 +28,8 @@ class DrawLines : Engine.EngineListener {
         }
     }
 
-    private fun configureVertices(settings: ProgramSettings) {
-        settings.setData(POSITION) {
+    private fun configureVertices(builder: ProgramBuilder) {
+        builder.setData(POSITION) {
             floatArrayOf(
                 -0.5f, 0.5f,
                 -0.5f, -0.5f,
@@ -39,8 +39,8 @@ class DrawLines : Engine.EngineListener {
         }
     }
 
-    private fun configureShaders(settings: ProgramSettings) {
-        settings.addShader(
+    private fun configureShaders(builder: ProgramBuilder) {
+        builder.addShader(
             VertexShaderBuilder()
                 .code(
                     """
@@ -53,7 +53,7 @@ class DrawLines : Engine.EngineListener {
                 .build()
         )
 
-        settings.addShader(
+        builder.addShader(
             FragmentShaderBuilder()
                 .code(
                     """

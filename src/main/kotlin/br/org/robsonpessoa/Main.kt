@@ -9,7 +9,7 @@ fun main() {
 
     app.setWindowConfiguration("Hello World", 900, 900)
     app.setOnEngineListener(exercise)
-    app.getWindow()?.setOnKeyListener(exercise)
+    app.getWindow()!!.setOnKeyListener(exercise)
 
     app.run()
 }

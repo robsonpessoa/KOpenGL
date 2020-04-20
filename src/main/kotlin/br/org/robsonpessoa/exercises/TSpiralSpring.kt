@@ -17,9 +17,9 @@ class TSpiralSpring : Engine.EngineListener, OnKeyListener {
 
     private val spring = Spring()
 
-    override fun onLoadProgramSettings(settings: ProgramSettings) {
-        configureShaders(settings)
-        configureVertices(settings)
+    override fun onBuildProgram(builder: ProgramBuilder) {
+        configureShaders(builder)
+        configureVertices(builder)
     }
 
     override fun onDraw(window: Window, program: Program) {
@@ -42,14 +42,14 @@ class TSpiralSpring : Engine.EngineListener, OnKeyListener {
         }
     }
 
-    private fun configureVertices(settings: ProgramSettings) {
-        settings.setData(POSITION) {
+    private fun configureVertices(builder: ProgramBuilder) {
+        builder.setData(POSITION) {
             spring.ctrlPoints.toBuffer()
         }
     }
 
-    private fun configureShaders(settings: ProgramSettings) {
-        settings.addShader(
+    private fun configureShaders(builder: ProgramBuilder) {
+        builder.addShader(
             VertexShaderBuilder()
                 .code(
                     """
@@ -63,7 +63,7 @@ class TSpiralSpring : Engine.EngineListener, OnKeyListener {
                 .build()
         )
 
-        settings.addShader(
+        builder.addShader(
             FragmentShaderBuilder()
                 .code(
                     """

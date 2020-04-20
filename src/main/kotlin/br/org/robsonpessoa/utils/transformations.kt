@@ -13,7 +13,7 @@ fun FloatArray.toBuffer(): FloatBuffer {
 fun FloatBuffer.asMatrix(columns: Int): Matrix {
     val matrix = Matrix(capacity() / columns, columns)
     (0 until capacity()).forEach {
-        matrix.data[it / columns][it % columns] = get(it)
+        matrix[it / columns, it % columns] = get(it)
     }
     return matrix
 }

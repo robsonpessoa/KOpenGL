@@ -39,6 +39,7 @@ dependencies {
     compile group: 'org.lwjgl', name: 'lwjgl-opengl', version:"${jljgl_version}", classifier:'natives-linux'
     compile group: 'org.lwjgl', name: 'lwjgl-glfw', version:"${jljgl_version}", classifier:'natives-linux'
     compile group: 'org.lwjgl', name: 'lwjgl-stb', version:"${jljgl_version}", classifier:'natives-linux'
+
 }
 
 compileKotlin {

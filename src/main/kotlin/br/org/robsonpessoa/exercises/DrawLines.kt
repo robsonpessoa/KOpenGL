@@ -16,7 +16,7 @@ class DrawLines : Engine.EngineListener {
         configureVertices(settings)
     }
 
-    override fun onDraw(program: Program) {
+    override fun onDraw(window: Window, program: Program) {
         GL11.glClearColor(0f, 0f, 0f, 1.0f)
 
         program[POSITION]?.let {

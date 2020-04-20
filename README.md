@@ -1,7 +1,7 @@
 # KOpenGL
 Exercises of OpenGL implemented with Kotlin.
 
-This project was built with Gradle version 5.2.1 and Java 11.
+This project was created with Gradle version 5.2.1 and Java 11.
 
 ### Build
 To create the jar, use:

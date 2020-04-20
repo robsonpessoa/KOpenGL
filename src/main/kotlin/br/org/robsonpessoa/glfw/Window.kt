@@ -1,7 +1,5 @@
 package br.org.robsonpessoa.glfw
 
-import br.org.robsonpessoa.OnKeyListener
-import br.org.robsonpessoa.OnMouseListener
 import org.lwjgl.glfw.GLFW
 import org.lwjgl.glfw.GLFWKeyCallback
 import org.lwjgl.glfw.GLFWMouseButtonCallback
@@ -107,11 +105,11 @@ data class Window(val title: String, val width: Int, val height: Int) {
                 mods: Int
             ) {
 
-                println("[key event] key: $key")
-                println("[key event] scancode: $scancode")
-                println("[key event] action: $action")
-                println("[key event] mods: $mods")
-                println()
+//                println("[key event] key: $key")
+//                println("[key event] scancode: $scancode")
+//                println("[key event] action: $action")
+//                println("[key event] mods: $mods")
+//                println()
 
                 keyListener?.onKeyPressed(key, scancode, action, mods)
             }
@@ -119,10 +117,10 @@ data class Window(val title: String, val width: Int, val height: Int) {
 
         mouseCallback = GLFW.glfwSetMouseButtonCallback(id, object : GLFWMouseButtonCallback() {
             override fun invoke(window: Long, button: Int, action: Int, mods: Int) {
-                println("[mouse event] button: $button")
-                println("[mouse event] action: $action")
-                println("[mouse event] mods: $mods")
-                println()
+//                println("[mouse event] button: $button")
+//                println("[mouse event] action: $action")
+//                println("[mouse event] mods: $mods")
+//                println()
 
                 mouseListener?.onMouseClick(button, action, mods)
             }

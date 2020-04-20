@@ -48,7 +48,7 @@ class Engine {
         while (window!!.isOpen()) {
             // Clear the framebuffer
             glClear(GL_COLOR_BUFFER_BIT or GL_DEPTH_BUFFER_BIT)
-            engineListener?.onDraw(program!!)
+            engineListener?.onDraw(window!!, program!!)
             window!!.sync()
         }
     }
@@ -77,7 +77,7 @@ class Engine {
 
     interface EngineListener {
         fun onLoadProgramSettings(settings: ProgramSettings)
-        fun onDraw(program: Program)
+        fun onDraw(window: Window, program: Program)
     }
 
 }
